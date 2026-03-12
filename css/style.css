@@ -53,6 +53,20 @@ canvas {
   margin: 0 0 6px 0;
 }
 
+.sim-title-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.sim-credit{
+  font-size:13px;
+  color:rgba(255,255,255,0.65);
+  font-weight:400;
+  letter-spacing:0.2px;
+  white-space:nowrap;
+}
+
 .buttons {
   display: flex;
   gap: 6px;
@@ -95,6 +109,16 @@ body.mobile-touch-ui #ui {
 body.mobile-touch-ui #ui h1 {
   font-size: 14px;
   margin-bottom: 8px;
+}
+
+body.mobile-touch-ui .sim-title-row {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+body.mobile-touch-ui .sim-credit {
+  font-size: 12px;
+  white-space: normal;
 }
 
 body.mobile-touch-ui .buttons {
@@ -368,6 +392,16 @@ body.mobile-touch-ui #event-log {
 
   #ui h1 {
     font-size: 14px;
+  }
+
+  .sim-title-row {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sim-credit {
+    font-size: 12px;
+    white-space: normal;
   }
 
   button {
