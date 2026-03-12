@@ -1,0 +1,394 @@
+/* =====================================================
+   GLOBAL
+   ===================================================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #0f1115;
+  color: #eaeaea;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* =====================================================
+   CANVAS (ALWAYS BELOW UI)
+   ===================================================== */
+canvas {
+  position: fixed !important;
+  inset: 0;
+  z-index: 1;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+/* =====================================================
+   TOP UI BAR
+   ===================================================== */
+#top-controls {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 30;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: calc(100vw - 24px);
+}
+
+#ui {
+  background: rgba(20, 24, 32, 0.85);
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+#plasticity-dock {
+  display: none;
+  align-items: flex-start;
+  margin-top: 28px;
+}
+
+#ui h1 {
+  font-size: 16px;
+  margin: 0 0 6px 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+button {
+  background: #2e7df6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1f64d8;
+}
+
+.toggle {
+  font-weight: 700;
+}
+
+body.mobile-touch-ui #top-controls {
+  top: calc(8px + env(safe-area-inset-top));
+  left: calc(8px + env(safe-area-inset-left));
+  right: calc(8px + env(safe-area-inset-right));
+  max-width: none;
+}
+
+body.mobile-touch-ui #ui {
+  width: 100%;
+  background: rgba(16, 20, 28, 0.92);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+body.mobile-touch-ui #ui h1 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+body.mobile-touch-ui .buttons {
+  gap: 8px;
+}
+
+body.mobile-touch-ui button,
+body.mobile-touch-ui .toggle {
+  min-height: 42px;
+  font-size: 14px;
+}
+
+body.mobile-touch-ui button {
+  padding: 8px 12px;
+}
+
+body.mobile-touch-ui .toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(46, 125, 246, 0.16);
+  border: 1px solid rgba(126, 182, 255, 0.24);
+}
+
+body.mobile-touch-ui .toggle input {
+  width: 18px;
+  height: 18px;
+}
+
+body.mobile-touch-ui .panel.left {
+  top: auto;
+  bottom: 12px;
+  left: 12px;
+  width: min(340px, calc(100vw - 24px));
+  height: min(56vh, 460px);
+  transform: translateY(115%);
+}
+
+body.mobile-touch-ui .panel.left.open {
+  transform: translateY(0);
+}
+
+body.mobile-touch-ui .edge-tab.instructions {
+  top: auto;
+  bottom: 12px;
+  left: 12px;
+  width: 120px;
+  height: 36px;
+  writing-mode: horizontal-tb;
+  text-orientation: initial;
+  transform: none;
+  border-radius: 10px;
+}
+
+body.mobile-touch-ui #event-log {
+  display: none !important;
+}
+
+.plasticity-btn {
+  background: linear-gradient(135deg, #355589 0%, #28576f 48%, #2d7a6e 100%);
+  color: #ffffff;
+  min-width: 260px;
+  min-height: 84px;
+  padding: 12px 20px;
+  font-size: 28px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+  border: 1px solid rgba(180, 228, 255, 0.52);
+  box-shadow: 0 6px 18px rgba(45, 126, 246, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.25px;
+}
+
+.plasticity-btn:hover {
+  background: linear-gradient(135deg, #3e67a1 0%, #2f6c8d 50%, #3b8e80 100%);
+  box-shadow: 0 8px 20px rgba(54, 142, 255, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.plasticity-btn .ltp-token,
+.plasticity-btn .ltd-token {
+  color: #ffffff;
+  font-weight: 700;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.plasticity-btn.running .ltp-token,
+.plasticity-btn.running .ltd-token {
+  color: #ffffff;
+}
+
+.plasticity-btn.running {
+  animation: plasticityPulse 1.5s ease-in-out infinite;
+}
+
+.plasticity-btn.phase-ltp .ltp-token {
+  color: #39ff14;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+}
+
+.plasticity-btn.phase-ltd .ltd-token {
+  color: #ff2b2b;
+  text-shadow: 0 0 10px rgba(255, 43, 43, 0.7);
+}
+
+@keyframes plasticityPulse {
+  0%, 100% {
+    box-shadow: 0 6px 18px rgba(45, 126, 246, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 10px 24px rgba(67, 168, 255, 0.42), 0 0 16px rgba(80, 220, 190, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* =====================================================
+   PANELS
+   ===================================================== */
+.panel {
+  position: fixed;
+  background: rgba(20, 22, 28, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  z-index: 20;
+  transition: transform 0.35s ease;
+  backdrop-filter: blur(6px);
+}
+
+/* ---------------- LEFT: INSTRUCTIONS ---------------- */
+.panel.left {
+  top: 80px;
+  left: 12px;
+  width: 270px;
+  height: calc(100vh - 96px);
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.45;
+  overflow-y: auto;
+
+  /* DEFAULT: closed */
+  transform: translateX(-110%);
+}
+
+/* OPEN STATE */
+.panel.left.open {
+  transform: translateX(0);
+}
+
+/* ---------------- BOTTOM: OBSERVATIONS ---------------- */
+.panel.bottom {
+  bottom: 12px;
+  left: 50%;
+  width: calc(100vw - 48px);
+  padding: 12px 18px;
+  font-size: 13px;
+
+  /* DEFAULT: closed */
+  transform: translate(-50%, 120%);
+}
+
+/* OPEN STATE */
+.panel.bottom.open {
+  transform: translate(-50%, 0);
+}
+
+/* =====================================================
+   EDGE TABS
+   ===================================================== */
+.edge-tab {
+  position: fixed;
+  background: rgba(30, 34, 44, 0.95);
+  color: #eaeaea;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  cursor: pointer;
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  user-select: none;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.edge-tab:hover {
+  background: rgba(60, 120, 255, 0.9);
+  box-shadow: 0 0 12px rgba(90, 140, 255, 0.35);
+}
+
+/* Instructions tab (vertical) */
+.edge-tab.instructions {
+  top: 50%;
+  left: 0;
+  width: 44px;
+  height: 200px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: translateY(-50%);
+  border-radius: 10px 10px 0 0;
+}
+
+/* =====================================================
+   EVENT LOG — METABOLIC SUMMARY WINDOW
+   ===================================================== */
+#event-log {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+
+  width: 320px;
+  max-height: 120px;   /* shows ~3–5 lines */
+  padding: 8px 10px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background: rgba(18, 20, 26, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+
+  z-index: 25;
+  pointer-events: auto;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Hidden state (toggle-controlled) */
+#event-log.hidden {
+  display: none;
+}
+
+/* Individual summary lines */
+.event-line {
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+/* =====================================================
+   SEMANTIC COLORS (MATCH JS)
+   ===================================================== */
+.event-neural    { color: #ffd966; }
+.event-vascular  { color: #ff6f6f; }
+.event-glial     { color: #b58cff; }
+.event-system,
+.event-low       { color: #b0b0b0; }
+
+/* =====================================================
+   MOBILE ADJUSTMENTS
+   ===================================================== */
+@media (max-width: 600px) {
+
+  #top-controls {
+    top: calc(8px + env(safe-area-inset-top));
+    left: calc(8px + env(safe-area-inset-left));
+    right: calc(8px + env(safe-area-inset-right));
+    gap: 6px;
+  }
+
+  #ui {
+    max-width: calc(100vw - 16px);
+  }
+
+  #plasticity-dock {
+    margin-top: 24px;
+  }
+
+  #ui h1 {
+    font-size: 14px;
+  }
+
+  button {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .panel.left {
+    width: 240px;
+  }
+
+  .panel.bottom {
+    padding: 10px 14px;
+  }
+
+  .edge-tab.instructions {
+    height: 160px;
+    font-size: 12px;
+  }
+
+  #event-log {
+    width: calc(100vw - 28px);
+  }
+}
