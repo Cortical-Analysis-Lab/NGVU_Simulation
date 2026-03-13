@@ -81,3 +81,7 @@ The simulator is designed for:
 ## License
 
 This project is distributed under the license included in this repository. See [LICENSE](/workspaces/Neural_Signal_Simulation/LICENSE).
+
+© Shaun James — Cortical Analysis Lab
+
+The NGVU Simulation is an educational and research visualization tool developed by the Cortical Analysis Lab.
