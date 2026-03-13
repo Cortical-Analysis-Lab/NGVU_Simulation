@@ -18,6 +18,7 @@ The simulation models processes such as:
 - ion movement
 - astrocyte interactions
 - vascular and hemodynamic responses
+- metabolic waste buildup and clearance
 
 Rather than presenting these systems in isolation, the simulator shows how electrical, chemical, glial, and vascular dynamics connect inside a single neuro-glial-vascular unit.
 
@@ -31,11 +32,23 @@ To use the simulator:
 
 The simulator runs entirely in the browser, allowing users to explore the model without downloading software or preparing a local environment.
 
+## Interactive Concepts Included
+
+- excitatory and inhibitory synaptic integration at the soma
+- action-potential initiation and propagation in unmyelinated and myelinated axons
+- astrocyte support at synapses and around local neural activity
+- arterial delivery of metabolic support molecules such as oxygen and glucose
+- venous clearance of metabolic waste products
+- waste accumulation around the soma when clearance is paused
+- recovery of normal firing after clearance waves reduce local waste burden
+
 ## Views
 
 ### Neuron View
 
 This view focuses on neural signaling and membrane-level activity. It helps users follow how synaptic inputs shape neuronal behavior and how that activity connects to surrounding support systems.
+
+In the current overview scene, each completed firing cycle can generate local metabolic byproducts around the soma, including `CO2` and `H+`. The `Clearance` toggle controls whether those waste products are swept toward the vein in repeating clearance waves or allowed to accumulate locally. When waste buildup becomes high enough, the neuron becomes harder to stimulate and may require repeated grouped EPSP input before it can fire again.
 
 ### Synapse View
 
