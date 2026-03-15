@@ -265,6 +265,14 @@ body.mobile-touch-ui #event-log {
   transform: translateX(-110%);
 }
 
+.panel-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding-right: 6px;
+}
+
 /* OPEN STATE */
 .panel.left.open {
   transform: translateX(0);
