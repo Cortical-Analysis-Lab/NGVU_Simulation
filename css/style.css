@@ -182,10 +182,10 @@ body.mobile-touch-ui #event-log {
 .plasticity-btn {
   background: linear-gradient(135deg, #355589 0%, #28576f 48%, #2d7a6e 100%);
   color: #ffffff;
-  min-width: 260px;
-  min-height: 84px;
-  padding: 12px 20px;
-  font-size: 28px;
+  min-width: 156px;
+  min-height: 50px;
+  padding: 8px 14px;
+  font-size: 16px;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -194,7 +194,7 @@ body.mobile-touch-ui #event-log {
   font-weight: 700;
   border: 1px solid rgba(180, 228, 255, 0.52);
   box-shadow: 0 6px 18px rgba(45, 126, 246, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  letter-spacing: 0.25px;
+  letter-spacing: 0.2px;
 }
 
 .plasticity-btn:hover {
