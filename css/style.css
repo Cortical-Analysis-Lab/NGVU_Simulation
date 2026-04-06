@@ -116,6 +116,8 @@ body.mobile-touch-ui #ui {
   background: rgba(16, 20, 28, 0.92);
   padding: 12px;
   border-radius: 12px;
+  position: relative;
+  overflow: visible;
 }
 
 body.mobile-touch-ui #ui h1 {
@@ -147,6 +149,8 @@ body.mobile-touch-ui .mobile-banner-toggle {
 }
 
 body.mobile-touch-ui #top-controls.mobile-collapsed #ui {
+  width: auto;
+  display: inline-block;
   padding: 8px 10px;
 }
 
@@ -163,6 +167,15 @@ body.mobile-touch-ui #top-controls.mobile-collapsed .sim-title-row {
 
 body.mobile-touch-ui #top-controls.mobile-collapsed #ui h1 {
   margin-bottom: 0;
+}
+
+body.mobile-touch-ui #top-controls.mobile-collapsed .mobile-banner-toggle {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  margin-left: 0;
+  min-height: 32px;
+  padding: 5px 10px;
 }
 
 @media (orientation: landscape) {
