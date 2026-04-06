@@ -73,6 +73,18 @@ canvas {
   flex-wrap: wrap;
 }
 
+.mobile-banner-toggle {
+  display: none;
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f3f6fb;
+}
+
+.mobile-banner-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 button {
   background: #2e7df6;
   color: white;
@@ -123,6 +135,40 @@ body.mobile-touch-ui .sim-credit {
 
 body.mobile-touch-ui .buttons {
   gap: 8px;
+}
+
+body.mobile-touch-ui .mobile-banner-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+body.mobile-touch-ui #top-controls.mobile-collapsed #ui {
+  padding: 8px 10px;
+}
+
+body.mobile-touch-ui #top-controls.mobile-collapsed .sim-credit,
+body.mobile-touch-ui #top-controls.mobile-collapsed .buttons,
+body.mobile-touch-ui #top-controls.mobile-collapsed #plasticity-dock {
+  display: none !important;
+}
+
+body.mobile-touch-ui #top-controls.mobile-collapsed .sim-title-row {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+body.mobile-touch-ui #top-controls.mobile-collapsed #ui h1 {
+  margin-bottom: 0;
+}
+
+@media (orientation: landscape) {
+  body.mobile-touch-ui #top-controls {
+    max-width: min(68vw, 460px);
+  }
 }
 
 body.mobile-touch-ui button,
@@ -363,6 +409,25 @@ body.mobile-touch-ui #event-log {
   display: none;
 }
 
+.touch-fire-btn {
+  position: fixed;
+  right: calc(14px + env(safe-area-inset-right));
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  z-index: 32;
+  display: none;
+  min-width: 112px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
+body.touch-input-ui .touch-fire-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Individual summary lines */
 .event-line {
   margin-bottom: 4px;
@@ -432,5 +497,12 @@ body.mobile-touch-ui #event-log {
 
   #event-log {
     width: calc(100vw - 28px);
+  }
+
+  .touch-fire-btn {
+    min-width: 104px;
+    min-height: 44px;
+    padding: 9px 14px;
+    font-size: 13px;
   }
 }

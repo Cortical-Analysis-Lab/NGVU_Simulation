@@ -42,6 +42,10 @@ Cortical Analysis Lab
 ===================================================== -->
 <div id="event-log" aria-live="polite"></div>
 
+<button id="fireApBtn" class="touch-fire-btn" onclick="triggerTouchFireAP()">
+  Fire AP
+</button>
+
 <!-- =====================================================
      TOP UI BAR
 ===================================================== -->
@@ -50,6 +54,16 @@ Cortical Analysis Lab
     <div class="sim-title-row">
       <h1 class="sim-title">NGVU Simulation</h1>
       <span class="sim-credit">Created by Shaun James — Cortical Analysis Lab</span>
+      <button
+        id="mobileBannerToggle"
+        class="mobile-banner-toggle"
+        type="button"
+        onclick="toggleMobileBanner()"
+        aria-expanded="true"
+        aria-controls="top-controls"
+      >
+        Hide
+      </button>
     </div>
 
     <div class="buttons">
