@@ -38,6 +38,7 @@ The simulator runs entirely in the browser, allowing users to explore the model 
 - action-potential initiation and propagation in unmyelinated and myelinated axons
 - oligodendrocyte-supported myelination and saltatory conduction
 - astrocyte support at synapses and around local neural activity
+- astrocyte Ca2+-dependent gliotransmitter release and neuron-glia signaling
 - arterial delivery of metabolic support molecules such as oxygen and glucose
 - venous clearance of metabolic waste products
 - waste accumulation around the soma when clearance is paused
@@ -56,6 +57,10 @@ In the current overview scene, each completed firing cycle can generate local me
 ### Synapse View
 
 This view highlights local signaling at the synaptic scale, including transmitter release, diffusion, receptor activity, and nearby astrocyte involvement.
+
+The synapse view includes astrocyte sensing of synaptic activity, intracellular astrocytic Ca2+ signaling, and delayed gliotransmitter release. After astrocyte activation, gliotransmitters are released into the extracellular space and can bind neuronal GPCRs, illustrating a physiologic form of tripartite synapse modulation.
+
+This models the concept that astrocytes do not only clear transmitter from the cleft, but can also respond to neural activity and feed back onto nearby neurons through Ca2+-dependent gliotransmission.
 
 ### Cortical Column View
 
