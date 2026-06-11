@@ -1,0 +1,17 @@
+{
+  "name": "ngvu_wasm",
+  "type": "module",
+  "description": "WebAssembly helpers for the NGVU simulation",
+  "version": "0.1.0",
+  "license": "MIT",
+  "files": [
+    "ngvu_wasm_bg.wasm",
+    "ngvu_wasm.js",
+    "ngvu_wasm.d.ts"
+  ],
+  "main": "ngvu_wasm.js",
+  "types": "ngvu_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
