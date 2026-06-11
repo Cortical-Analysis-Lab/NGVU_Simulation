@@ -100,8 +100,62 @@ button:hover {
   background: #1f64d8;
 }
 
+button:disabled,
+button:disabled:hover {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .toggle {
   font-weight: 700;
+}
+
+.blockables-dropdown {
+  position: relative;
+  display: none;
+}
+
+.blockables-dropdown summary {
+  list-style: none;
+  background: #2e7df6;
+  color: #fff;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.blockables-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.blockables-dropdown[open] summary {
+  background: #1f64d8;
+}
+
+.blockables-menu {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 148px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px;
+  border-radius: 6px;
+  background: rgba(18, 23, 32, 0.96);
+  border: 1px solid rgba(180, 210, 255, 0.24);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32);
+}
+
+.blockables-menu .toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
 }
 
 body.mobile-touch-ui #top-controls {
@@ -259,6 +313,14 @@ body.mobile-touch-ui #event-log {
 .plasticity-btn:hover {
   background: linear-gradient(135deg, #3e67a1 0%, #2f6c8d 50%, #3b8e80 100%);
   box-shadow: 0 8px 20px rgba(54, 142, 255, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.plasticity-btn:disabled,
+.plasticity-btn:disabled:hover {
+  background: rgba(80, 88, 102, 0.88);
+  border-color: rgba(255, 140, 140, 0.45);
+  box-shadow: none;
+  animation: none;
 }
 
 .plasticity-btn .ltp-token,
