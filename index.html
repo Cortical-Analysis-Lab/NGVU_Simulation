@@ -12,6 +12,7 @@ Cortical Analysis Lab
   <meta name="author" content="Shaun James - Cortical Analysis Lab" />
   <meta name="creator" content="Shaun James" />
   <meta name="publisher" content="Cortical Analysis Lab" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%2311141b'/%3E%3Cpath d='M6 17h5l2-5 4 10 3-7h6' fill='none' stroke='%23ffcf78' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
 
   <!-- p5.js (LOAD ONCE) -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
@@ -86,6 +87,11 @@ Cortical Analysis Lab
         <input type="checkbox" id="tutorialToggle" />
         <span>Guided Tutorial</span>
       </label>
+
+      <label class="toggle" id="bbbDebugToggleContainer">
+        <input type="checkbox" id="bbbDebugToggle" />
+        <span>BBB Guides</span>
+      </label>
     </div>
   </div>
 
@@ -96,7 +102,58 @@ Cortical Analysis Lab
   </div>
 </div>
 
-<script src="app.min.js"></script>
+<script src="js/constants/colors.js"></script>
+<script src="js/ui/eventLog.js"></script>
+<script src="js/ui/panelContent.js"></script>
+<script src="js/signals/hemodynamics.js"></script>
+<script src="js/signals/psp.js"></script>
+<script src="js/signals/soma.js"></script>
+<script src="js/signals/voltageTrace.js"></script>
+<script src="js/signals/synapseCoupling.js"></script>
+<script src="js/signals/axonSpike.js"></script>
+<script src="js/signals/myelinAP.js"></script>
+<script src="js/signals/vesicleBurst.js"></script>
+<script src="js/geometry/neuronGeometry.js"></script>
+<script src="js/geometry/neuron2Geometry.js"></script>
+<script src="js/geometry/neuron3Geometry.js"></script>
+<script src="js/geometry/astrocyteGeometry.js"></script>
+<script src="js/geometry/oligodendrocyteGeometry.js"></script>
+<script src="js/geometry/myelinGeometry.js"></script>
+<script src="js/geometry/axonPath.js"></script>
+<script src="js/geometry/artery.js"></script>
+<script src="js/geometry/bloodContents.js"></script>
+<script src="js/geometry/vein.js"></script>
+<script src="js/geometry/veinContents.js"></script>
+<script src="js/geometry/molecules.js"></script>
+<script src="js/ions/backgroundIons.js"></script>
+<script src="js/ions/somaIons.js"></script>
+<script src="js/ions/axonIons.js"></script>
+<script src="js/ions/nodeIons.js"></script>
+<script src="js/synapse/geometry/neuronShape.js"></script>
+<script src="js/synapse/geometry/astrocyteSynapse.js"></script>
+<script src="js/synapse/geometry/vesicleGeometry.js"></script>
+<script src="js/synapse/geometry/NTgeometry.js"></script>
+<script src="js/synapse/geometry/cleftGeometry.js"></script>
+<script src="js/synapse/dynamics/vesicleMotion.js"></script>
+<script src="js/synapse/dynamics/vesiclePools.js"></script>
+<script src="js/synapse/dynamics/terminalAP.js"></script>
+<script src="js/synapse/dynamics/NTmotion.js"></script>
+<script src="js/synapse/physiology/vesicleLoading.js"></script>
+<script src="js/synapse/physiology/vesicleRelease.js"></script>
+<script src="js/synapse/physiology/synapticBurst.js"></script>
+<script src="js/synapse/physiology/vesicleRecycling.js"></script>
+<script src="js/synapse/preSynapse.js"></script>
+<script src="js/synapse/postSynapse.js"></script>
+<script src="js/synapse/astrocyteEndfoot.js"></script>
+<script src="js/synapse/psdReceptors.js"></script>
+<script src="js/views/Overview.js"></script>
+<script src="js/views/WorldRenderer.js"></script>
+<script src="js/views/CorticalView.js"></script>
+<script src="js/views/SynapseView.js"></script>
+<script src="js/interaction/synapseInteraction.js"></script>
+<script src="js/interaction/voltageWave.js"></script>
+<script src="js/main.js"></script>
+<script type="module" src="js/bootstrap.js"></script>
 
 </body>
 </html>
