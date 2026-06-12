@@ -73,6 +73,30 @@ canvas {
   flex-wrap: wrap;
 }
 
+.view-select-wrap {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+}
+
+.view-select-wrap select {
+  min-height: 34px;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 30px 6px 10px;
+  background: #2e7df6;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.view-select-wrap select:focus {
+  outline: 2px solid rgba(180, 220, 255, 0.75);
+  outline-offset: 2px;
+}
+
 .mobile-banner-toggle {
   display: none;
   margin-left: auto;
@@ -158,14 +182,14 @@ button:disabled:hover {
   white-space: nowrap;
 }
 
-body.mobile-touch-ui #top-controls {
+body.touch-input-ui #top-controls {
   top: calc(8px + env(safe-area-inset-top));
   left: calc(8px + env(safe-area-inset-left));
   right: calc(8px + env(safe-area-inset-right));
   max-width: none;
 }
 
-body.mobile-touch-ui #ui {
+body.touch-input-ui #ui {
   width: 100%;
   background: rgba(16, 20, 28, 0.92);
   padding: 12px;
@@ -174,26 +198,37 @@ body.mobile-touch-ui #ui {
   overflow: visible;
 }
 
-body.mobile-touch-ui #ui h1 {
+body.touch-input-ui #ui h1 {
   font-size: 14px;
   margin-bottom: 8px;
 }
 
-body.mobile-touch-ui .sim-title-row {
+body.touch-input-ui .sim-title-row {
   flex-wrap: wrap;
   gap: 6px;
 }
 
-body.mobile-touch-ui .sim-credit {
+body.touch-input-ui .sim-credit {
   font-size: 12px;
   white-space: normal;
 }
 
-body.mobile-touch-ui .buttons {
+body.touch-input-ui .buttons {
   gap: 8px;
+  max-height: min(34vh, 220px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-body.mobile-touch-ui .mobile-banner-toggle {
+body.touch-input-ui .view-select-wrap {
+  display: inline-flex;
+}
+
+body.touch-input-ui .view-mode-button {
+  display: none !important;
+}
+
+body.touch-input-ui .mobile-banner-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -202,28 +237,27 @@ body.mobile-touch-ui .mobile-banner-toggle {
   font-size: 12px;
 }
 
-body.mobile-touch-ui #top-controls.mobile-collapsed #ui {
+body.touch-input-ui #top-controls.mobile-collapsed #ui {
   width: auto;
   display: inline-block;
   padding: 8px 10px;
 }
 
-body.mobile-touch-ui #top-controls.mobile-collapsed .sim-credit,
-body.mobile-touch-ui #top-controls.mobile-collapsed .buttons,
-body.mobile-touch-ui #top-controls.mobile-collapsed #plasticity-dock {
+body.touch-input-ui #top-controls.mobile-collapsed .sim-credit,
+body.touch-input-ui #top-controls.mobile-collapsed #plasticity-dock {
   display: none !important;
 }
 
-body.mobile-touch-ui #top-controls.mobile-collapsed .sim-title-row {
+body.touch-input-ui #top-controls.mobile-collapsed .sim-title-row {
   flex-wrap: nowrap;
   align-items: center;
 }
 
-body.mobile-touch-ui #top-controls.mobile-collapsed #ui h1 {
+body.touch-input-ui #top-controls.mobile-collapsed #ui h1 {
   margin-bottom: 0;
 }
 
-body.mobile-touch-ui #top-controls.mobile-collapsed .mobile-banner-toggle {
+body.touch-input-ui #top-controls.mobile-collapsed .mobile-banner-toggle {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
@@ -233,22 +267,26 @@ body.mobile-touch-ui #top-controls.mobile-collapsed .mobile-banner-toggle {
 }
 
 @media (orientation: landscape) {
-  body.mobile-touch-ui #top-controls {
+  body.touch-input-ui #top-controls {
     max-width: min(68vw, 460px);
   }
 }
 
-body.mobile-touch-ui button,
-body.mobile-touch-ui .toggle {
+body.touch-input-ui button,
+body.touch-input-ui .toggle,
+body.touch-input-ui .blockables-dropdown summary,
+body.touch-input-ui .view-select-wrap select {
   min-height: 42px;
   font-size: 14px;
 }
 
-body.mobile-touch-ui button {
+body.touch-input-ui button,
+body.touch-input-ui .blockables-dropdown summary,
+body.touch-input-ui .view-select-wrap select {
   padding: 8px 12px;
 }
 
-body.mobile-touch-ui .toggle {
+body.touch-input-ui .toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -258,9 +296,15 @@ body.mobile-touch-ui .toggle {
   border: 1px solid rgba(126, 182, 255, 0.24);
 }
 
-body.mobile-touch-ui .toggle input {
+body.touch-input-ui .toggle input {
   width: 18px;
   height: 18px;
+}
+
+body.touch-input-ui .blockables-menu {
+  max-height: min(46vh, 320px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 body.mobile-touch-ui .panel.left {

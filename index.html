@@ -68,19 +68,23 @@ Cortical Analysis Lab
     </div>
 
     <div class="buttons">
-      <button onclick="setMode('cortical')">Cortical Column</button>
-      <button onclick="setMode('overview')">Neuron</button>
-      <button onclick="setMode('synapse')">Synapse</button>
+      <label class="view-select-wrap" id="viewSelectContainer">
+        <span>View</span>
+        <select id="viewSelect">
+          <option value="cortical">Cortical Column</option>
+          <option value="overview">Neuron</option>
+          <option value="synapse">Synapse</option>
+        </select>
+      </label>
+
+      <button class="view-mode-button" onclick="setMode('cortical')">Cortical Column</button>
+      <button class="view-mode-button" onclick="setMode('overview')">Neuron</button>
+      <button class="view-mode-button" onclick="setMode('synapse')">Synapse</button>
       <button id="pauseBtn">Pause</button>
 
       <label class="toggle" id="myelinToggleContainer">
         <input type="checkbox" id="myelinToggle" />
         <span>Myelin</span>
-      </label>
-
-      <label class="toggle" id="clearanceToggleContainer">
-        <input type="checkbox" id="clearanceToggle" checked />
-        <span>Clearance</span>
       </label>
 
       <label class="toggle" id="tutorialToggleContainer">
@@ -106,6 +110,11 @@ Cortical Analysis Lab
             <span>Na+</span>
           </label>
 
+          <label class="toggle" id="ionChannelsBlockToggleContainer">
+            <input type="checkbox" id="ionChannelsBlockToggle" />
+            <span>ECS Ions</span>
+          </label>
+
           <label class="toggle" id="calciumBlockToggleContainer">
             <input type="checkbox" id="calciumBlockToggle" />
             <span>Ca2+</span>
@@ -114,6 +123,21 @@ Cortical Analysis Lab
           <label class="toggle" id="snareBlockToggleContainer">
             <input type="checkbox" id="snareBlockToggle" />
             <span>SNARE</span>
+          </label>
+
+          <label class="toggle" id="oxygenBlockToggleContainer">
+            <input type="checkbox" id="oxygenBlockToggle" />
+            <span>O2</span>
+          </label>
+
+          <label class="toggle" id="glucoseBlockToggleContainer">
+            <input type="checkbox" id="glucoseBlockToggle" />
+            <span>Glucose</span>
+          </label>
+
+          <label class="toggle" id="clearanceToggleContainer">
+            <input type="checkbox" id="clearanceToggle" />
+            <span>Clearance</span>
           </label>
         </div>
       </details>

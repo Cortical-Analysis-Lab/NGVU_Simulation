@@ -43,6 +43,7 @@ The simulator runs entirely in the browser, allowing users to explore the model 
 - venous clearance of metabolic waste products
 - waste accumulation around the soma when clearance is paused
 - recovery of normal firing after clearance waves reduce local waste burden
+- neuron and synapse blockable controls for isolating ion movement, metabolic support, receptor signaling, reuptake, calcium entry, and vesicle fusion
 
 ## Views
 
@@ -54,6 +55,14 @@ When myelin is enabled, the axon displays myelin sheaths, nodes of Ranvier, and 
 
 In the current overview scene, each completed firing cycle can generate local metabolic byproducts around the soma, including `CO2` and `H+`. The `Clearance` toggle controls whether those waste products are swept toward the vein in repeating clearance waves or allowed to accumulate locally. When waste buildup becomes high enough, the neuron becomes harder to stimulate and may require repeated grouped EPSP input before it can fire again.
 
+The `Blockables` menu in Neuron View includes:
+
+- `Na+` - blocks soma sodium influx so no soma action potential is generated and the paired K+ efflux does not occur
+- `ECS Ions` - reduces visible extracellular and fluxing Na+/K+ ions to about one third and makes larger excitatory input necessary to depolarize the soma and fire an action potential
+- `O2` - reduces oxygen delivery from the artery and limits sustained action-potential generation after the first few spikes
+- `Glucose` - reduces glucose delivery from the artery and limits sustained action-potential generation after the first few spikes
+- `Clearance` - disables metabolic waste clearance so waste accumulates near the soma
+
 ### Synapse View
 
 This view highlights local signaling at the synaptic scale, including transmitter release, diffusion, receptor activity, and nearby astrocyte involvement.
@@ -62,9 +71,13 @@ The synapse view includes astrocyte sensing of synaptic activity, intracellular 
 
 This models the concept that astrocytes do not only clear transmitter from the cleft, but can also respond to neural activity and feed back onto nearby neurons through Ca2+-dependent gliotransmission.
 
-### Cortical Column View
+The `Blockables` menu in Synapse View includes:
 
-This view provides a larger-scale context for the simulation and supports exploration of how local signaling fits into a broader cortical setting.
+- `AMPA` - blocks AMPA receptor signaling and suppresses the fast postsynaptic excitatory response
+- `Reuptake` - blocks neurotransmitter uptake so transmitter remains in the cleft longer
+- `Na+` - blocks postsynaptic sodium channel activity and Na+ entry through active receptors
+- `Ca2+` - blocks presynaptic calcium entry needed for vesicle release
+- `SNARE` - blocks SNARE-dependent vesicle fusion at the active zone
 
 ## What This Repository Contains
 
@@ -73,7 +86,6 @@ This repository contains the files required to run the public web simulator:
 - `index.html` - main entry point for the simulator
 - `css/` - styles for the interface
 - `js/` - simulation logic and rendering code
-- `wasm/` - WebAssembly modules used for performance
 - `README.md` - project overview and usage
 - `LICENSE` - open source license
 
