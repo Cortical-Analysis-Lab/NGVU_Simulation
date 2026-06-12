@@ -42,12 +42,6 @@ canvas {
   border-radius: 8px;
 }
 
-#plasticity-dock {
-  display: none;
-  align-items: flex-start;
-  margin-top: 28px;
-}
-
 #ui h1 {
   font-size: 16px;
   margin: 0 0 6px 0;
@@ -132,6 +126,30 @@ button:disabled:hover {
 
 .toggle {
   font-weight: 700;
+}
+
+.ltp-ltd-toggle {
+  align-items: center;
+  gap: 4px;
+}
+
+.ltp-ltd-toggle .ltp-token,
+.ltp-ltd-toggle .ltd-token {
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.ltp-ltd-toggle.running {
+  color: #ffffff;
+}
+
+.ltp-ltd-toggle.phase-ltp .ltp-token {
+  color: #39ff14;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+}
+
+.ltp-ltd-toggle.phase-ltd .ltd-token {
+  color: #ff4b4b;
+  text-shadow: 0 0 10px rgba(255, 75, 75, 0.65);
 }
 
 .blockables-dropdown {
@@ -243,8 +261,7 @@ body.touch-input-ui #top-controls.mobile-collapsed #ui {
   padding: 8px 10px;
 }
 
-body.touch-input-ui #top-controls.mobile-collapsed .sim-credit,
-body.touch-input-ui #top-controls.mobile-collapsed #plasticity-dock {
+body.touch-input-ui #top-controls.mobile-collapsed .sim-credit {
   display: none !important;
 }
 
@@ -334,72 +351,6 @@ body.mobile-touch-ui .edge-tab.instructions {
 
 body.mobile-touch-ui #event-log {
   display: none !important;
-}
-
-.plasticity-btn {
-  background: linear-gradient(135deg, #355589 0%, #28576f 48%, #2d7a6e 100%);
-  color: #ffffff;
-  min-width: 156px;
-  min-height: 50px;
-  padding: 8px 14px;
-  font-size: 16px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 700;
-  border: 1px solid rgba(180, 228, 255, 0.52);
-  box-shadow: 0 6px 18px rgba(45, 126, 246, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  letter-spacing: 0.2px;
-}
-
-.plasticity-btn:hover {
-  background: linear-gradient(135deg, #3e67a1 0%, #2f6c8d 50%, #3b8e80 100%);
-  box-shadow: 0 8px 20px rgba(54, 142, 255, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.plasticity-btn:disabled,
-.plasticity-btn:disabled:hover {
-  background: rgba(80, 88, 102, 0.88);
-  border-color: rgba(255, 140, 140, 0.45);
-  box-shadow: none;
-  animation: none;
-}
-
-.plasticity-btn .ltp-token,
-.plasticity-btn .ltd-token {
-  color: #ffffff;
-  font-weight: 700;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
-}
-
-.plasticity-btn.running .ltp-token,
-.plasticity-btn.running .ltd-token {
-  color: #ffffff;
-}
-
-.plasticity-btn.running {
-  animation: plasticityPulse 1.5s ease-in-out infinite;
-}
-
-.plasticity-btn.phase-ltp .ltp-token {
-  color: #39ff14;
-  text-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
-}
-
-.plasticity-btn.phase-ltd .ltd-token {
-  color: #ff2b2b;
-  text-shadow: 0 0 10px rgba(255, 43, 43, 0.7);
-}
-
-@keyframes plasticityPulse {
-  0%, 100% {
-    box-shadow: 0 6px 18px rgba(45, 126, 246, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
-  50% {
-    box-shadow: 0 10px 24px rgba(67, 168, 255, 0.42), 0 0 16px rgba(80, 220, 190, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
 }
 
 /* =====================================================
@@ -576,10 +527,6 @@ body.touch-input-ui .touch-fire-btn {
 
   #ui {
     max-width: calc(100vw - 16px);
-  }
-
-  #plasticity-dock {
-    margin-top: 24px;
   }
 
   #ui h1 {
