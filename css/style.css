@@ -257,11 +257,15 @@ body.touch-input-ui .mobile-banner-toggle {
 
 body.touch-input-ui #top-controls.mobile-collapsed #ui {
   width: auto;
-  display: inline-block;
-  padding: 8px 10px;
+  display: inline-flex;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
-body.touch-input-ui #top-controls.mobile-collapsed .sim-credit {
+body.touch-input-ui #top-controls.mobile-collapsed .buttons,
+body.touch-input-ui #top-controls.mobile-collapsed .sim-credit,
+body.touch-input-ui #top-controls.mobile-collapsed #ui h1 {
   display: none !important;
 }
 
@@ -270,14 +274,8 @@ body.touch-input-ui #top-controls.mobile-collapsed .sim-title-row {
   align-items: center;
 }
 
-body.touch-input-ui #top-controls.mobile-collapsed #ui h1 {
-  margin-bottom: 0;
-}
-
 body.touch-input-ui #top-controls.mobile-collapsed .mobile-banner-toggle {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
+  position: static;
   margin-left: 0;
   min-height: 32px;
   padding: 5px 10px;
@@ -319,6 +317,13 @@ body.touch-input-ui .toggle input {
 }
 
 body.touch-input-ui .blockables-menu {
+  position: fixed;
+  z-index: 60;
+  top: var(--blockables-menu-top, calc(92px + env(safe-area-inset-top)));
+  left: var(--blockables-menu-left, calc(8px + env(safe-area-inset-left)));
+  right: auto;
+  width: max-content;
+  min-width: 156px;
   max-height: min(46vh, 320px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
