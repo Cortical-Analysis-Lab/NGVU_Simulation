@@ -79,6 +79,19 @@ The `Blockables` menu in Synapse View includes:
 - `Ca2+` - blocks presynaptic calcium entry needed for vesicle release
 - `SNARE` - blocks SNARE-dependent vesicle fusion at the active zone
 
+### Cortical Column View
+
+The cortical column view shows a layered cortical tissue model with neurons, astrocytes, microglia, a branching microvascular network, BBB/endothelial structures, traveling vascular molecules, action-potential activity, and metabolic waste clearance.
+
+The `Pathologies` menu in Cortical Column View includes:
+
+- `Insomnia` - slows and weakens metabolic waste clearance so waste burden builds over time. As waste accumulates, additional microglia appear incrementally in a capped, distributed pattern rather than clustering around every waste particle.
+- `Epilepsy` - initiates a seizure-like event from a random neuron. A green action potential starts the event, followed by a circular shockwave that activates reached neurons and astrocytes. While the wave travels, blood flow slows, vascular molecule generation is reduced, waste clearance pauses, and vascular efflux increases where the wave reaches vessels. After the wave completes, microglia migrate inward and disperse through the cortical field while emitting shimmering inflammatory rings.
+- `Stroke` - generates a red/yellow rock-like occlusion that travels through the main vessel and lodges near the middle capillary bed. Once lodged, it blocks molecule flow, action-potential propagation, and metabolic clearance in the affected pathway. When the pathology is unchecked, the occlusion breaks into slower fragments that drift out through the vascular network. After lodging, microglia move toward the affected capillary bed and reside around it.
+- `Aging` - reduces neuron density, reduces capillary branching, increases BBB spacing gaps, increases microglia, reduces green action-potential activity, and reduces vascular molecule generation. Molecules continue to follow the remaining visible vascular paths, and all microglia shimmer to indicate inflammatory signaling.
+
+Pathology-added or pathology-mobilized microglia emit small, bright shimmering rings representing neuroinflammatory molecule release.
+
 ## What This Repository Contains
 
 This repository contains the files required to run the public web simulator:
