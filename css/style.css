@@ -74,7 +74,15 @@ canvas {
   font-weight: 700;
 }
 
-.view-select-wrap select {
+.cortical-select-wrap {
+  display: none;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+}
+
+.view-select-wrap select,
+.cortical-select-wrap select {
   min-height: 34px;
   border: none;
   border-radius: 4px;
@@ -86,7 +94,8 @@ canvas {
   cursor: pointer;
 }
 
-.view-select-wrap select:focus {
+.view-select-wrap select:focus,
+.cortical-select-wrap select:focus {
   outline: 2px solid rgba(180, 220, 255, 0.75);
   outline-offset: 2px;
 }
@@ -162,15 +171,31 @@ button:disabled:hover {
   background: #2e7df6;
   color: #fff;
   border-radius: 4px;
-  padding: 6px 10px;
+  padding: 6px 28px 6px 10px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   user-select: none;
+  position: relative;
 }
 
 .blockables-dropdown summary::-webkit-details-marker {
   display: none;
+}
+
+.blockables-dropdown summary::after {
+  content: "▾";
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.blockables-dropdown[open] summary::after {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .blockables-dropdown[open] summary {
@@ -290,14 +315,16 @@ body.touch-input-ui #top-controls.mobile-collapsed .mobile-banner-toggle {
 body.touch-input-ui button,
 body.touch-input-ui .toggle,
 body.touch-input-ui .blockables-dropdown summary,
-body.touch-input-ui .view-select-wrap select {
+body.touch-input-ui .view-select-wrap select,
+body.touch-input-ui .cortical-select-wrap select {
   min-height: 42px;
   font-size: 14px;
 }
 
 body.touch-input-ui button,
 body.touch-input-ui .blockables-dropdown summary,
-body.touch-input-ui .view-select-wrap select {
+body.touch-input-ui .view-select-wrap select,
+body.touch-input-ui .cortical-select-wrap select {
   padding: 8px 12px;
 }
 

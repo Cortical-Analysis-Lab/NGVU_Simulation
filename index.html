@@ -80,6 +80,47 @@ Cortical Analysis Lab
       <button class="view-mode-button" onclick="setMode('cortical')">Cortical Column</button>
       <button class="view-mode-button" onclick="setMode('overview')">Neuron</button>
       <button class="view-mode-button" onclick="setMode('synapse')">Synapse</button>
+
+      <label class="cortical-select-wrap" id="corticalDisplayContainer">
+        <span>Display</span>
+        <select id="corticalDisplaySelect">
+          <option value="all">All</option>
+          <option value="neurons">Neurons</option>
+          <option value="glia">Glia</option>
+          <option value="vasculature">Vasculature</option>
+        </select>
+      </label>
+
+      <details id="pathologiesContainer" class="blockables-dropdown">
+        <summary>Pathologies</summary>
+        <div class="blockables-menu">
+          <label class="toggle" id="corticalInsomniaToggleContainer">
+            <input type="checkbox" id="corticalInsomniaToggle" />
+            <span>Insomnia</span>
+          </label>
+
+          <label class="toggle" id="corticalEpilepsyToggleContainer">
+            <input type="checkbox" id="corticalEpilepsyToggle" />
+            <span>Epilepsy</span>
+          </label>
+
+          <label class="toggle" id="corticalStrokeToggleContainer">
+            <input type="checkbox" id="corticalStrokeToggle" />
+            <span>Stroke</span>
+          </label>
+
+          <label class="toggle" id="corticalAgingToggleContainer">
+            <input type="checkbox" id="corticalAgingToggle" />
+            <span>Aging</span>
+          </label>
+
+          <label class="toggle" id="corticalAlzheimersToggleContainer">
+            <input type="checkbox" id="corticalAlzheimersToggle" />
+            <span>Alzheimer's</span>
+          </label>
+        </div>
+      </details>
+
       <button id="pauseBtn">Pause</button>
 
       <label class="toggle" id="myelinToggleContainer">
