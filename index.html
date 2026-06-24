@@ -71,12 +71,14 @@ Cortical Analysis Lab
       <label class="view-select-wrap" id="viewSelectContainer">
         <span>View</span>
         <select id="viewSelect">
+          <option value="home">Home</option>
           <option value="cortical">Cortical Column</option>
           <option value="overview">Neuron</option>
           <option value="synapse">Synapse</option>
         </select>
       </label>
 
+      <button class="view-mode-button" onclick="setMode('home')">Home</button>
       <button class="view-mode-button" onclick="setMode('cortical')">Cortical Column</button>
       <button class="view-mode-button" onclick="setMode('overview')">Neuron</button>
       <button class="view-mode-button" onclick="setMode('synapse')">Synapse</button>
@@ -186,6 +188,60 @@ Cortical Analysis Lab
   </div>
 
 </div>
+
+<!-- =====================================================
+     HOME PAGE
+===================================================== -->
+<main id="home-screen" class="home-screen" aria-labelledby="home-title">
+  <section class="home-shell">
+    <p class="home-kicker">Interactive Neurophysiology Simulation</p>
+    <h2 id="home-title">Explore the interactions of the <span class="home-title-nowrap">neuro-glial-vascular unit</span>.</h2>
+    <p class="home-intro">
+      Choose a view, start with its Guided Tutorial if you are visiting it for the first time,
+      and then use the controls to explore how neural activity, metabolism, glia, and blood flow shape the simulation.
+    </p>
+
+    <div class="home-actions" aria-label="Start a simulation view">
+      <button type="button" onclick="setMode('overview')">Open Neuron</button>
+      <button type="button" onclick="setMode('synapse')">Open Synapse</button>
+      <button type="button" onclick="setMode('cortical')">Open Cortical Column</button>
+    </div>
+
+    <aside class="home-instructions-note" aria-label="Instructions location">
+      <strong>Need help inside a view?</strong>
+      <span>Each simulation view has instructions in a collapsible pane on the left side of the screen.</span>
+    </aside>
+
+    <div class="home-grid" aria-label="Site guide">
+      <article class="home-card">
+        <span class="home-card-label">1</span>
+        <h3>Pick a View</h3>
+        <p>Open the cortical column, neuron, or synapse scene from the buttons above.</p>
+      </article>
+
+      <article class="home-card">
+        <span class="home-card-label">2</span>
+        <h3>Start Guided</h3>
+        <p>When you enter a view for the first time, turn on Guided Tutorial before trying Fire AP, Blockables, filters, or Pathologies.</p>
+      </article>
+
+      <article class="home-card">
+        <span class="home-card-label">3</span>
+        <h3>Explore and Learn</h3>
+        <p>Animated particles, voltage traces, vascular flow, and glial responses show what is active in each scene.</p>
+      </article>
+    </div>
+
+    <div class="home-expectations">
+      <h3>What to expect</h3>
+      <ul>
+        <li>The cortical column emphasizes layered tissue, vasculature, glia, and pathology overlays.</li>
+        <li>The neuron view focuses on action potentials, metabolic support, myelin, ions, and waste clearance.</li>
+        <li>The synapse view zooms into vesicle release, receptor signaling, reuptake, and astrocyte participation.</li>
+      </ul>
+    </div>
+  </section>
+</main>
 
 
 <script src="app.min.js"></script>
