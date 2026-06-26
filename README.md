@@ -92,16 +92,6 @@ The `Pathologies` menu in Cortical Column View includes:
 
 Pathology-added or pathology-mobilized microglia emit small, bright shimmering rings representing neuroinflammatory molecule release.
 
-## What This Repository Contains
-
-This repository contains the files required to run the public web simulator:
-
-- `index.html` - main entry point for the simulator
-- `css/` - styles for the interface
-- `js/` - simulation logic and rendering code
-- `README.md` - project overview and usage
-- `LICENSE` - open source license
-
 ## Intended Audience
 
 The simulator is designed for:

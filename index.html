@@ -115,6 +115,15 @@ Cortical Analysis Lab
             <input type="checkbox" id="corticalAgingToggle" />
             <span>Aging</span>
           </label>
+
+          <button
+            class="dropdown-close-button"
+            type="button"
+            onclick="closeDropdownFromButton(this)"
+            aria-label="Close Pathologies menu"
+          >
+            Close ▲
+          </button>
         </div>
       </details>
 
@@ -182,6 +191,15 @@ Cortical Analysis Lab
             <input type="checkbox" id="clearanceToggle" />
             <span>Clearance</span>
           </label>
+
+          <button
+            class="dropdown-close-button"
+            type="button"
+            onclick="closeDropdownFromButton(this)"
+            aria-label="Close Blockables menu"
+          >
+            Close ▲
+          </button>
         </div>
       </details>
     </div>
@@ -201,22 +219,11 @@ Cortical Analysis Lab
       and then use the controls to explore how neural activity, metabolism, glia, and blood flow shape the simulation.
     </p>
 
-    <div class="home-actions" aria-label="Start a simulation view">
-      <button type="button" onclick="setMode('overview')">Open Neuron</button>
-      <button type="button" onclick="setMode('synapse')">Open Synapse</button>
-      <button type="button" onclick="setMode('cortical')">Open Cortical Column</button>
-    </div>
-
-    <aside class="home-instructions-note" aria-label="Instructions location">
-      <strong>Need help inside a view?</strong>
-      <span>Each simulation view has instructions in a collapsible pane on the left side of the screen.</span>
-    </aside>
-
     <div class="home-grid" aria-label="Site guide">
       <article class="home-card">
         <span class="home-card-label">1</span>
         <h3>Pick a View</h3>
-        <p>Open the cortical column, neuron, or synapse scene from the buttons above.</p>
+        <p>Choose the cortical column, neuron, or synapse scene from the view buttons below.</p>
       </article>
 
       <article class="home-card">
@@ -231,6 +238,17 @@ Cortical Analysis Lab
         <p>Animated particles, voltage traces, vascular flow, and glial responses show what is active in each scene.</p>
       </article>
     </div>
+
+    <div class="home-actions" aria-label="Start a simulation view">
+      <button type="button" onclick="setMode('overview')">Open Neuron View</button>
+      <button type="button" onclick="setMode('synapse')">Open Synapse View</button>
+      <button type="button" onclick="setMode('cortical')">Open Cortical Column View</button>
+    </div>
+
+    <aside class="home-instructions-note" aria-label="Instructions location">
+      <strong>Need help inside a view?</strong>
+      <span>Each simulation view has a collapsible Instructions tab that adapts to desktop, tablet, and phone layouts.</span>
+    </aside>
 
     <div class="home-expectations">
       <h3>What to expect</h3>
