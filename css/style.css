@@ -231,7 +231,7 @@ canvas {
 }
 
 .view-select-wrap {
-  display: none;
+  display: inline-flex;
   align-items: center;
   gap: 7px;
   font-weight: 700;
@@ -255,6 +255,11 @@ canvas {
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+}
+
+#viewSelect,
+#viewSelect option {
+  font-weight: 800;
 }
 
 .view-select-wrap select:focus,
@@ -447,14 +452,6 @@ body.touch-input-ui .dropdown-close-button {
 
 body.touch-input-ui .dropdown-close-button:hover {
   background: rgba(46, 125, 246, 0.96);
-}
-
-body.touch-input-ui .view-select-wrap {
-  display: inline-flex;
-}
-
-body.touch-input-ui .view-mode-button {
-  display: none !important;
 }
 
 body.touch-input-ui .mobile-banner-toggle {
