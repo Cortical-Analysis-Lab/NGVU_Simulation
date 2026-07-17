@@ -50,11 +50,16 @@ Interactive concepts in this view include:
 
 When myelin is enabled, the axon displays myelin sheaths, nodes of Ranvier, and an oligodendrocyte maintaining the sheaths to illustrate the glial support cell responsible for myelination.
 
+The `Trace Readout` button beneath the membrane-voltage plot opens a Neuron-specific, scrollable history. Action potentials are stored automatically once they reach the center of the rolling Vm display. EPSP and IPSP arrivals are instead grouped into five-second PSP activity recordings. Saved plots support two-point inspection and preserve the Blockables active during capture. Users can select individual traces and export a PDF containing an image of each selected title, plot, marker, and coordinate calculation.
+
+The `Electrode` toggle enables a virtual cellular electrode in Neuron View. The pointer becomes a translucent white recording circle. Every electrode placement starts the same primary-neuron activity chain as `Fire AP`; it does not directly stimulate the selected structure. Placement determines whether the trace represents somatic, dendritic, axonal, extracellular, or astrocytic activity. Electrode plots support two-point inspection, preserve active Blockables, and provide the same selected-trace PDF export. Automatic Trace Readout capture is paused while Electrode mode is active.
+
 In Neuron View, each completed firing cycle can generate local metabolic byproducts around the soma, including `CO2` and `H+`. The `Clearance` toggle controls whether those waste products are swept toward the vein in repeating clearance waves or allowed to accumulate locally. When waste buildup becomes high enough, the neuron becomes harder to stimulate and may require repeated grouped EPSP input before it can fire again.
 
 The `Blockables` menu in Neuron View includes:
 
-- `Na+` - blocks soma sodium influx so no soma action potential is generated and the paired K+ efflux does not occur
+- `Na+ channels` - blocks soma sodium influx so no soma action potential is generated and the paired K+ efflux does not occur
+- `K+ channels` - blocks K+ efflux and normal neural repolarization; Vm briefly plateaus at the AP peak and then declines slowly through Na+/K+ pump-mediated recovery. `Fire AP` remains usable during the prolonged decay while the Na+ gradient can support another spike. Repeated spikes consume that gradient and produce progressively smaller peaks until pump recovery restores firing capacity.
 - `ECS Ions` - reduces visible extracellular and fluxing Na+/K+ ions to about one third and makes larger excitatory input necessary to depolarize the soma and fire an action potential
 - `O2` - reduces oxygen delivery from the artery and limits sustained action-potential generation after the first few spikes
 - `Glucose` - reduces glucose delivery from the artery and limits sustained action-potential generation after the first few spikes
@@ -75,6 +80,8 @@ Interactive concepts in this view include:
 
 The astrocyte elements show a tripartite synapse model: astrocytes do not only clear transmitter from the cleft, but can also sense nearby activity and feed back onto neurons through Ca2+-dependent gliotransmission.
 
+The `Trace Readout` button beneath the postsynaptic plot opens a separate Synapse-specific history. Postsynaptic responses are collected into five-second synaptic-activity recordings rather than generating one saved trace per response. Saved plots support two-point inspection, active-Blockables labels, and selected-trace PDF export.
+
 The `Blockables` menu in Synapse View includes:
 
 - `AMPA` - blocks AMPA receptor signaling and suppresses the fast postsynaptic excitatory response
@@ -88,6 +95,8 @@ The `LTP/LTD` toggle runs an automatic plasticity demonstration for comparing ac
 ### Cortical Column View
 
 The cortical column view shows a layered cortical tissue model with neurons, astrocytes, microglia, a branching microvascular network, BBB/endothelial structures, traveling vascular molecules, action-potential activity, and metabolic waste clearance.
+
+In Cortical Column View, the `Electrode` toggle enables local field potential recording. Clicking anywhere inside the column places the electrode and begins a five-second trace, including clicks over vascular or BBB graphics because the measurement is based on nearby AP propagation rather than the selected structure. A temporary circle shows the 0.115 mm pickup radius. Traveling action potentials contribute according to their distance within that radius, so electrode placement can produce a single deflection or a compound trace from several nearby signals. New traces are added to the top of the same scrollable history. The pop-out closes when switching views or toggling the function, and unchecking the toggle exits placement mode.
 
 Interactive concepts in this view include:
 
