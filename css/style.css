@@ -115,7 +115,37 @@ canvas {
 .readout-header-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 7px;
+}
+
+.readout-autoscale-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 8px;
+  border: 1px solid rgba(142, 201, 255, 0.4);
+  border-radius: 6px;
+  background: rgba(44, 116, 184, 0.2);
+  color: #eef7ff;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.trace-readout-header > div:first-child > .readout-autoscale-toggle,
+.electrode-readout-header > div:first-child > .readout-autoscale-toggle {
+  margin-top: 7px;
+}
+
+.readout-autoscale-toggle input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #58aef7;
 }
 
 .trace-readout-header .readout-export-button,
@@ -281,11 +311,37 @@ body.electrode-mode canvas {
 
 .electrode-readout-header {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: stretch;
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px;
   padding: 14px 16px 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.electrode-readout-header .readout-header-actions {
+  width: 100%;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.electrode-readout-header #electrodeReadoutExportBtn {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+  padding: 0 12px;
+  text-align: center;
+}
+
+.electrode-readout-header #electrodeReadoutCloseBtn {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  margin-left: auto;
+  padding: 0 0 4px;
+  font-size: 38px;
+  font-weight: 500;
 }
 
 .electrode-readout-header h2 {
@@ -392,6 +448,20 @@ body.touch-input-ui:not(.phone-touch-ui) .electrode-readout-header button {
   min-width: 44px;
   width: 44px;
   height: 44px;
+}
+
+body.touch-input-ui:not(.phone-touch-ui) .electrode-readout-header #electrodeReadoutExportBtn {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+}
+
+body.touch-input-ui:not(.phone-touch-ui) .electrode-readout-header #electrodeReadoutCloseBtn {
+  flex-basis: 48px;
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  font-size: 40px;
 }
 
 body.touch-input-ui:not(.phone-touch-ui) .electrode-readout-list {
@@ -504,6 +574,48 @@ body.touch-input-ui:not(.phone-touch-ui) .electrode-recording-card svg {
 
 .home-actions button:hover {
   background: #1f64d8;
+}
+
+.cortical-readiness-status {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: 9px;
+  box-sizing: border-box;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 1px solid rgba(126, 227, 195, 0.48);
+  border-radius: 9px;
+  background: rgba(12, 28, 34, 0.94);
+  color: #eafff8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.24);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.cortical-readiness-status[hidden] {
+  display: none;
+}
+
+.view-loading-spinner {
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 2px solid rgba(234, 255, 248, 0.28);
+  border-top-color: #7ee3c3;
+  border-radius: 50%;
+  animation: view-loading-spin 0.8s linear infinite;
+}
+
+.cortical-readiness-status.failed {
+  border-color: rgba(255, 128, 128, 0.72);
+  background: rgba(67, 24, 28, 0.95);
+}
+
+@keyframes view-loading-spin {
+  to { transform: rotate(360deg); }
 }
 
 .home-instructions-note {
