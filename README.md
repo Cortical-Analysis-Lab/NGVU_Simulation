@@ -1,16 +1,16 @@
-# [Neuro-glial-vascular Unit (NGVU) Simulation](https://cortical-analysis-lab.github.io/NGVU_Simulation/)
+# [Interactive Virtual NGVU Lab](https://cortical-analysis-lab.github.io/NGVU_Simulation/)
 
-An interactive, publicly accessible neuroscience simulator for exploring how neural signaling, synaptic activity, glial regulation, and vascular responses interact within a simplified neurovascular unit.
+A browser-based virtual neuroscience laboratory for exploring how neural signaling, synaptic activity, glial regulation, metabolism, and vascular responses interact within the neuro-glial-vascular unit (NGVU).
 
-[Launch the simulator](https://cortical-analysis-lab.github.io/NGVU_Simulation/)
+[Launch the Interactive Virtual NGVU Lab](https://cortical-analysis-lab.github.io/NGVU_Simulation/)
 
-The NGVU Simulation runs directly in the browser through GitHub Pages. No installation, setup, or local configuration is required. Open the link above, load the homepage, and choose a simulation view.
+The lab runs directly in the browser through GitHub Pages. No installation, setup, or local configuration is required. Open the link above and choose an experimental workspace from the homepage.
 
-## Overview
+## Virtual Lab Overview
 
-The simulator is designed for education, exploration, and visual explanation of neuro-glial-vascular physiology. It opens on a homepage that guides users into three interactive simulation views: membrane-level neural signaling, synaptic transmission, and cortical tissue-scale vascular context.
+The Interactive Virtual NGVU Lab supports education, guided investigation, and visual explanation of neuro-glial-vascular physiology. Its three experimental workspaces provide complementary recording scales: membrane-level neuronal signaling, local synaptic transmission, and cortical tissue-scale neural, glial, and vascular activity.
 
-Across those views, the simulation models processes such as:
+Experiments run on a simplified educational model that includes processes such as:
 
 - neuronal electrical activity, ion movement, and action-potential propagation
 - synaptic vesicle release, neurotransmitter diffusion, receptor signaling, and reuptake
@@ -20,21 +20,31 @@ Across those views, the simulation models processes such as:
 - blood-brain barrier, endothelial, and pericyte features along vessel paths
 - metabolic waste buildup, clearance, and pathology-associated disruption
 
-Rather than presenting these systems in isolation, the simulator separates them into focused views while showing how electrical, chemical, glial, and vascular dynamics connect across the neuro-glial-vascular unit.
+Rather than presenting these systems in isolation, the virtual lab separates them into focused workspaces while showing how electrical, chemical, glial, metabolic, and vascular dynamics connect across the NGVU.
 
-## Using the Simulator
+## Working in the Virtual Lab
 
-To use the simulator:
+To begin an investigation:
 
-1. Open the title link at the top of this document or the launch link above.
-2. Use the homepage to choose `Neuron View`, `Synapse View`, or `Cortical Column View`.
-3. In a new view, start with `Guided Tutorial` if you want a step-by-step introduction before using the interactive controls.
-4. Use the view buttons or `View` menu to move between `Home`, `Cortical Column`, `Neuron`, and `Synapse`.
-5. Open the collapsible `Instructions` tab inside each simulation view for view-specific controls and component notes.
+1. Open the title link or the launch link above.
+2. Choose the `Neuron`, `Synapse`, or `Cortical Column` workspace for the recording scale you want to investigate.
+3. Start `Guided Tutorial` for a guided introduction to the workspace and its physiology.
+4. Apply experimental manipulations through `Blockables`, `Pathologies`, display filters, or the `LTP/LTD` demonstration where available.
+5. Use virtual electrodes, plots, trace histories, measurements, and exports to observe and document the response.
+6. Open the collapsible `Instructions` tab for workspace-specific controls and component notes.
 
-The simulator runs entirely in the browser, allowing users to explore the model without downloading software or preparing a local environment. Controls change by view: `Blockables` appears for neuron and synapse mechanisms, `Pathologies` and `Display` filters apply to the cortical column, and the synapse view includes an `LTP/LTD` demonstration.
+The lab runs entirely in the browser. Tools change by workspace: `Blockables` manipulates neuron and synapse mechanisms, `Pathologies` and `Display` filters apply to the cortical column, and the Synapse workspace includes an `LTP/LTD` demonstration.
 
-## Views
+## Virtual Lab Tools
+
+- **Stimulation:** Use `Fire AP`, synaptic activity controls, and guided demonstrations to initiate modeled neural events.
+- **Virtual electrodes:** Place cellular or extracellular recording electrodes to sample activity at selected locations.
+- **Plots and trace histories:** Examine membrane-voltage, postsynaptic, and local field potential recordings across repeated trials.
+- **A/B measurements:** Select two plot coordinates to compare amplitude and time differences within a recorded trace.
+- **Experimental manipulations:** Apply channel, receptor, transporter, metabolic, clearance, plasticity, and pathology conditions through `Blockables`, `LTP/LTD`, and `Pathologies`.
+- **Trace export:** Select recorded traces and export plots, markers, coordinate calculations, and active manipulation labels to PDF.
+
+## Experimental Workspaces
 
 ### Neuron View
 
@@ -120,12 +130,12 @@ The `Display` control can isolate cortical column content by showing all structu
 
 ## Intended Audience
 
-The simulator is designed for:
+The Interactive Virtual NGVU Lab is designed for:
 
-- neuroscience students
-- educators teaching neural signaling
-- researchers demonstrating neurovascular coupling
-- anyone interested in interactive neuroscience visualization
+- neuroscience students using guided tutorials to explore modeled physiology
+- educators teaching neural signaling, synaptic physiology, and neurovascular coupling
+- researchers and science communicators demonstrating NGVU concepts
+- independent learners interested in interactive neuroscience investigation
 
 ## License
 
@@ -133,4 +143,4 @@ This project is distributed under the license included in this repository. See [
 
 © Shaun James — Cortical Analysis Lab
 
-The NGVU Simulation is an educational and research visualization tool developed by the Cortical Analysis Lab.
+The Interactive Virtual NGVU Lab is an educational investigation and visualization environment developed by the Cortical Analysis Lab. Its experiments use a simplified model intended to make relationships across neuronal, glial, metabolic, and vascular physiology visible and testable.
