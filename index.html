@@ -101,7 +101,7 @@ Cortical Analysis Lab
         <span>View</span>
         <select id="viewSelect">
           <option value="home">Home</option>
-          <option value="cortical" disabled>Cortical Column (preparing)</option>
+          <option value="cortical">Cortical Column</option>
           <option value="overview">Neuron</option>
           <option value="synapse">Synapse</option>
         </select>
@@ -303,13 +303,9 @@ Cortical Analysis Lab
     </div>
 
     <div class="home-actions" aria-label="Start a simulation view">
-      <button type="button" onclick="setMode('overview')" disabled>Open Neuron View</button>
-      <button type="button" onclick="setMode('synapse')" disabled>Open Synapse View</button>
-      <button id="openCorticalViewBtn" type="button" onclick="setMode('cortical')" disabled>Preparing Cortical Column…</button>
-      <div id="corticalReadinessStatus" class="cortical-readiness-status" role="status" aria-live="polite">
-        <span class="view-loading-spinner" aria-hidden="true"></span>
-        <span>Loading views…</span>
-      </div>
+      <button type="button" onclick="setMode('overview')">Open Neuron View</button>
+      <button type="button" onclick="setMode('synapse')">Open Synapse View</button>
+      <button id="openCorticalViewBtn" type="button" onclick="setMode('cortical')">Open Cortical Column View</button>
     </div>
 
     <aside class="home-instructions-note" aria-label="Instructions location">
@@ -326,7 +322,16 @@ Cortical Analysis Lab
       </ul>
     </div>
   </section>
+
 </main>
+
+<div id="corticalLoadingOverlay" class="cortical-loading-overlay" role="status" aria-live="polite" hidden>
+  <div class="cortical-loading-card">
+    <span class="cortical-loading-spinner" aria-hidden="true"></span>
+    <strong>Loading Cortical Column View</strong>
+    <span id="corticalLoadingDetail">Preparing the complete scene…</span>
+  </div>
+</div>
 
 
 <script src="app.min.js"></script>
