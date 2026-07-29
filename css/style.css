@@ -873,7 +873,12 @@ body.touch-input-ui:not(.phone-touch-ui) .electrode-recording-card svg {
 }
 
 .mobile-banner-toggle {
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 5px 9px;
+  font-size: 12px;
   margin-left: auto;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -1092,7 +1097,7 @@ body.touch-input-ui .mobile-banner-toggle {
   font-size: 12px;
 }
 
-body.touch-input-ui #top-controls.mobile-collapsed #ui {
+#top-controls.mobile-collapsed #ui {
   width: auto;
   display: inline-flex;
   padding: 0;
@@ -1100,18 +1105,18 @@ body.touch-input-ui #top-controls.mobile-collapsed #ui {
   border-radius: 0;
 }
 
-body.touch-input-ui #top-controls.mobile-collapsed .buttons,
-body.touch-input-ui #top-controls.mobile-collapsed .sim-credit,
-body.touch-input-ui #top-controls.mobile-collapsed #ui h1 {
+#top-controls.mobile-collapsed .buttons,
+#top-controls.mobile-collapsed .sim-credit,
+#top-controls.mobile-collapsed #ui h1 {
   display: none !important;
 }
 
-body.touch-input-ui #top-controls.mobile-collapsed .sim-title-row {
+#top-controls.mobile-collapsed .sim-title-row {
   flex-wrap: nowrap;
   align-items: center;
 }
 
-body.touch-input-ui #top-controls.mobile-collapsed .mobile-banner-toggle {
+#top-controls.mobile-collapsed .mobile-banner-toggle {
   position: static;
   margin-left: 0;
   min-height: 32px;
