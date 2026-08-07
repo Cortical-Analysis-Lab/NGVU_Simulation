@@ -60,6 +60,7 @@ Cortical Analysis Lab
   hidden
 >
   <header class="trace-readout-header">
+    <span class="readout-drag-hint" aria-hidden="true">Drag to move</span>
     <div>
       <h2 id="traceReadoutTitle">Vm Trace Readouts</h2>
       <label class="readout-autoscale-toggle">
@@ -127,7 +128,7 @@ Cortical Analysis Lab
 
           <label class="toggle" id="corticalEpilepsyToggleContainer">
             <input type="checkbox" id="corticalEpilepsyToggle" />
-            <span>Epilepsy</span>
+            <span>Seizure</span>
           </label>
 
           <label class="toggle" id="corticalStrokeToggleContainer">
@@ -254,6 +255,7 @@ Cortical Analysis Lab
   hidden
 >
   <header class="electrode-readout-header">
+    <span class="readout-drag-hint" aria-hidden="true">Drag to move</span>
     <div>
       <h2 id="electrodeReadoutTitle">Electrode Recording History</h2>
       <label class="readout-autoscale-toggle">
@@ -331,7 +333,7 @@ Cortical Analysis Lab
 <div id="corticalLoadingOverlay" class="cortical-loading-overlay" role="status" aria-live="polite" hidden>
   <div class="cortical-loading-card">
     <span class="cortical-loading-spinner" aria-hidden="true"></span>
-    <strong>Loading Cortical Column View</strong>
+    <strong id="corticalLoadingTitle">Loading Cortical Column View</strong>
     <span id="corticalLoadingDetail">Preparing the complete scene…</span>
   </div>
 </div>

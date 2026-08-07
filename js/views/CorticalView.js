@@ -915,6 +915,9 @@ function ensureCorticalColumnPlaceholderImage() {
 function updateCorticalView() {
   const corticalState = getCorticalViewState();
   corticalState.time += corticalState.dt;
+  if (window.mobileTouchUI && corticalState.zoom !== 1) {
+    resetCorticalViewTransform();
+  }
   corticalState.zoom = constrain(corticalState.zoom, 1, 3.5);
   if (!corticalState.offsetInitialized) {
     resetCorticalViewTransform();
@@ -956,6 +959,7 @@ function updateCorticalAgingSensitiveCaches() {
 }
 
 function zoomCorticalCanvasAtScreenPoint(screenX, screenY, zoomFactor) {
+  if (window.mobileTouchUI) return;
   const corticalState = getCorticalViewState();
   const viewport = getCorticalViewportMetrics();
   const baseScale = getCorticalBaseScale(viewport.viewportWidth, viewport.viewportHeight);
@@ -1029,16 +1033,35 @@ function drawCorticalView() {
   const staticCache = ensureCorticalStaticSceneCache({
     viewport,
     baseScale,
-    fitScale,
-    offset: corticalState.offset,
-    displayMode,
-    showNeurons,
-    showGlia,
-    showVasculature
+    displayMode
   });
-  if (staticCache?.image) {
-    imageMode(CORNER);
-    image(staticCache.image, viewport.x, viewport.y, viewport.viewportWidth, viewport.viewportHeight);
+  if (staticCache?.layers) {
+    const baseOffset = staticCache.baseOffset || { x: 0, y: 0 };
+    const cacheZoom = corticalState.zoom;
+    const cacheX =
+      viewport.centerX + corticalState.offset.x -
+      cacheZoom * (viewport.centerX + baseOffset.x) +
+      cacheZoom * viewport.x;
+    const cacheY =
+      viewport.centerY + corticalState.offset.y -
+      cacheZoom * (viewport.centerY + baseOffset.y) +
+      cacheZoom * viewport.y;
+    const drawCachedLayer = (layerName) => {
+      const layerImage = staticCache.layers[layerName];
+      if (!layerImage) return;
+      imageMode(CORNER);
+      image(
+        layerImage,
+        cacheX,
+        cacheY,
+        viewport.viewportWidth * cacheZoom,
+        viewport.viewportHeight * cacheZoom
+      );
+    };
+    drawCachedLayer("background");
+    if (showNeurons) drawCachedLayer("neurons");
+    if (showGlia) drawCachedLayer("glia");
+    if (showVasculature) drawCachedLayer("vasculature");
   }
 
   translate(viewport.centerX + corticalState.offset.x, viewport.centerY + corticalState.offset.y);
@@ -1053,39 +1076,90 @@ function drawCorticalView() {
 }
 
 function ensureCorticalStaticSceneCache(options) {
-  const { viewport, baseScale, fitScale, offset, displayMode, showNeurons, showGlia, showVasculature } = options;
+  const { viewport, baseScale } = options;
+  const baseOffset = {
+    x: -((CORTICAL_VIEW_BOUNDS.left + CORTICAL_VIEW_BOUNDS.right) * 0.5) * baseScale,
+    y: -((CORTICAL_VIEW_BOUNDS.top + CORTICAL_VIEW_BOUNDS.bottom) * 0.5) * baseScale
+  };
   const cacheKey = [
     CORTICAL_MICROVASCULAR_DATA_VERSION,
     isCorticalAgingEnabled() ? "aging" : "baseline",
-    displayMode,
     round(viewport.x),
     round(viewport.y),
     round(viewport.viewportWidth),
     round(viewport.viewportHeight),
-    round((offset?.x || 0) * 10),
-    round((offset?.y || 0) * 10),
-    round(fitScale * 1000)
+    round(baseScale * 1000)
   ].join(":");
 
-  if (corticalStaticSceneCache?.key === cacheKey && corticalStaticSceneCache.image) {
-    return corticalStaticSceneCache;
+  if (corticalStaticSceneCache?.key !== cacheKey) {
+    corticalStaticSceneCache = {
+      key: cacheKey,
+      baseOffset,
+      layers: {}
+    };
   }
 
-  push();
-  translate(viewport.centerX + offset.x, viewport.centerY + offset.y);
-  scale(fitScale);
-  drawCorticalStaticSceneContent(showNeurons, showGlia, showVasculature, baseScale);
-  pop();
+  const layerDrawers = {
+    background: () => {
+      drawCorticalColumnBackdrop();
+      drawCorticalLayerBandBackgrounds();
+      drawCorticalPiaMaterLayer();
+    },
+    neurons: () => {
+      beginCorticalPiaTissueClip();
+      drawCorticalCajalRetziusCells();
+      drawCorticalFusiformNeurons();
+      drawCorticalInhibitoryNeurons();
+      drawCorticalInhibitoryType2Neurons();
+      drawCorticalStellateGranularNeurons();
+      drawCorticalNeuronClusters("behind", false, false);
+      drawCorticalNeuronClusters("front", false, false);
+      endCorticalPiaTissueClip();
+    },
+    glia: () => drawCorticalAstrocyteField(false),
+    vasculature: () => drawCorticalMicrovascularNetworkStatic(baseScale)
+  };
 
-  corticalStaticSceneCache = {
-    key: cacheKey,
-    image: get(
+  Object.entries(layerDrawers).forEach(([layerName, drawLayer]) => {
+    if (corticalStaticSceneCache.layers[layerName]) return;
+
+    drawingContext.clearRect(
+      viewport.x,
+      viewport.y,
+      viewport.viewportWidth,
+      viewport.viewportHeight
+    );
+    if (layerName === "background") {
+      drawingContext.save();
+      drawingContext.fillStyle = "rgb(15, 17, 21)";
+      drawingContext.fillRect(
+        viewport.x,
+        viewport.y,
+        viewport.viewportWidth,
+        viewport.viewportHeight
+      );
+      drawingContext.restore();
+    }
+    push();
+    translate(viewport.centerX + baseOffset.x, viewport.centerY + baseOffset.y);
+    scale(baseScale);
+    drawLayer();
+    pop();
+
+    corticalStaticSceneCache.layers[layerName] = get(
       floor(viewport.x),
       floor(viewport.y),
       ceil(viewport.viewportWidth),
       ceil(viewport.viewportHeight)
-    )
-  };
+    );
+  });
+
+  drawingContext.clearRect(
+    viewport.x,
+    viewport.y,
+    viewport.viewportWidth,
+    viewport.viewportHeight
+  );
 
   return corticalStaticSceneCache;
 }
@@ -1107,13 +1181,13 @@ function drawCorticalStaticSceneContent(showNeurons, showGlia, showVasculature, 
   if (showGlia) {
     drawCorticalAstrocyteField(false);
   }
-  if (showVasculature) {
-    drawCorticalMicrovascularNetworkStatic(baseScale);
-  }
   if (showNeurons) {
     beginCorticalPiaTissueClip();
     drawCorticalNeuronClusters("front", false, false);
     endCorticalPiaTissueClip();
+  }
+  if (showVasculature) {
+    drawCorticalMicrovascularNetworkStatic(baseScale);
   }
 }
 
@@ -1393,14 +1467,30 @@ function drawCorticalBbbUnit(x, y, options = {}) {
     const endothelialTx = cos(endothelialAngle);
     const endothelialTy = sin(endothelialAngle);
     push();
+    stroke(38, 58, 54, 155);
+    strokeWeight(5.7);
+    strokeCap(ROUND);
+    line(
+      cx - endothelialTx * 13.5 + 0.9,
+      cy - endothelialTy * 13.5 + 1.15,
+      cx + endothelialTx * 13.5 + 0.9,
+      cy + endothelialTy * 13.5 + 1.15
+    );
     stroke(endotheliumColor);
     strokeWeight(4.2);
-    strokeCap(ROUND);
     line(
       cx - endothelialTx * 13.5,
       cy - endothelialTy * 13.5,
       cx + endothelialTx * 13.5,
       cy + endothelialTy * 13.5
+    );
+    stroke(239, 255, 248, 160);
+    strokeWeight(1.05);
+    line(
+      cx - endothelialTx * 12.6 - frame.nx * 0.65,
+      cy - endothelialTy * 12.6 - frame.ny * 0.65,
+      cx + endothelialTx * 12.6 - frame.nx * 0.65,
+      cy + endothelialTy * 12.6 - frame.ny * 0.65
     );
     pop();
 
@@ -1430,7 +1520,12 @@ function drawCorticalBbbUnit(x, y, options = {}) {
     );
     rotate(frame.angle);
     if (astrocyteSide < 0) rotate(PI);
+    fill(62, 38, 30, 130);
+    ellipse(1.4, 1.8, 52, 15.5);
+    fill(pericyteColor);
     ellipse(0, 0, 50, 14);
+    fill(255, 226, 194, 118);
+    ellipse(-8, -2.3, 20, 4.2);
     pop();
   });
 
@@ -1507,15 +1602,17 @@ function drawCorticalColumnBackdrop() {
   noStroke();
 
   const ctx = drawingContext;
-  const gradient = ctx.createLinearGradient(
+  const gradient = ctx.createRadialGradient(
+    -CORTICAL_COLUMN_FRAME.width * 0.2,
+    -CORTICAL_COLUMN_FRAME.height * 0.3,
+    24,
     0,
-    -CORTICAL_COLUMN_FRAME.height * 0.5,
     0,
-    CORTICAL_COLUMN_FRAME.height * 0.5
+    CORTICAL_COLUMN_FRAME.height * 0.82
   );
-  gradient.addColorStop(0, "rgb(19, 27, 39)");
-  gradient.addColorStop(0.54, "rgb(13, 20, 31)");
-  gradient.addColorStop(1, "rgb(10, 16, 25)");
+  gradient.addColorStop(0, "rgb(37, 51, 66)");
+  gradient.addColorStop(0.46, "rgb(18, 28, 41)");
+  gradient.addColorStop(1, "rgb(7, 12, 20)");
   ctx.fillStyle = gradient;
   ctx.beginPath();
   ctx.roundRect(
@@ -2374,6 +2471,61 @@ function warmCorticalViewInBackground() {
   }
 
   scheduleNextWarmupTask();
+}
+
+let corticalAgingPreparationPromise = null;
+
+function prepareCorticalAgingView(onProgress) {
+  if (corticalAgingPreparationPromise) return corticalAgingPreparationPromise;
+
+  updateCorticalAgingSensitiveCaches();
+  const tasks = [
+    ["Preparing pyramidal neurons", getCorticalNeuronLayout],
+    ["Preparing Cajal-Retzius neurons", getCorticalCrNeuronLayout],
+    ["Preparing stellate neurons", getCorticalSgNeuronLayout],
+    ["Preparing fusiform neurons", getCorticalFusiformNeuronLayout],
+    ["Preparing inhibitory neurons", getCorticalInhibitoryNeuronLayout],
+    ["Preparing secondary inhibitory neurons", getCorticalInhibitoryType2NeuronLayout],
+    ["Preparing astrocytes", getCorticalAstrocyteLayout],
+    ["Preparing microglia", getCorticalMicrogliaLayout],
+    ["Preparing vascular geometry", ensureCorticalMicrovascularFlowData],
+    ["Preparing signal nodes", getCorticalNeuralSignalNodes],
+    ["Preparing activation routes", getCorticalActivationRouteCatalog],
+    ["Preparing inhibitory routes", getCorticalInhibitorySignalCells],
+    ["Preparing vascular effects", warmCorticalVascularRenderAssets],
+    ["Rendering cortical layers", warmCorticalStaticSceneRender]
+  ];
+
+  corticalAgingPreparationPromise = new Promise((resolve, reject) => {
+    let completed = 0;
+
+    function runNextTask() {
+      const task = tasks[completed];
+      if (!task) {
+        resolve();
+        return;
+      }
+
+      const [taskName, runTask] = task;
+      onProgress?.(taskName, completed, tasks.length);
+      try {
+        runTask();
+      } catch (error) {
+        reject(error);
+        return;
+      }
+
+      completed += 1;
+      onProgress?.(taskName, completed, tasks.length);
+      window.setTimeout(runNextTask, 16);
+    }
+
+    window.setTimeout(runNextTask, 16);
+  }).finally(() => {
+    corticalAgingPreparationPromise = null;
+  });
+
+  return corticalAgingPreparationPromise;
 }
 
 function warmCorticalVascularRenderAssets() {
@@ -5452,6 +5604,12 @@ function drawCorticalAstrocyte(astrocyte, activationSnapshot = null) {
     const endY = sin(arm.angle) * arm.length;
 
     noFill();
+    stroke(55, 35, 72, 135);
+    strokeWeight(1.45);
+    beginShape();
+    vertex(0.45, 0.58);
+    quadraticVertex(controlX + 0.45, controlY + 0.58, endX + 0.45, endY + 0.58);
+    endShape();
     stroke(astroColor);
     strokeWeight(0.85);
     beginShape();
@@ -5459,17 +5617,42 @@ function drawCorticalAstrocyte(astrocyte, activationSnapshot = null) {
     quadraticVertex(controlX, controlY, endX, endY);
     endShape();
 
+    stroke(244, 225, 255, 120);
+    strokeWeight(0.3);
+    beginShape();
+    vertex(-0.2, -0.28);
+    quadraticVertex(controlX - 0.2, controlY - 0.28, endX - 0.2, endY - 0.28);
+    endShape();
+
     noStroke();
-    fill(astroColor);
     push();
     translate(endX, endY);
     rotate(arm.angle);
+    fill(55, 35, 72, 115);
+    ellipse(0.45, 0.55, arm.endfootW + 0.65, arm.endfootH + 0.45);
+    fill(astroColor);
     ellipse(0, 0, arm.endfootW, arm.endfootH);
+    fill(246, 229, 255, 105);
+    ellipse(-arm.endfootW * 0.16, -arm.endfootH * 0.18, arm.endfootW * 0.42, arm.endfootH * 0.3);
     pop();
   });
 
   noStroke();
+  fill(52, 34, 68, 125);
+  ellipse(0.65, 0.85, astrocyte.radius * 2 + 1.1);
+  const somaMaterial = drawingContext.createRadialGradient(
+    -astrocyte.radius * 0.38,
+    -astrocyte.radius * 0.42,
+    0.25,
+    0,
+    0,
+    astrocyte.radius * 1.05
+  );
+  somaMaterial.addColorStop(0, "rgba(244, 226, 255, 1)");
+  somaMaterial.addColorStop(0.38, "rgba(196, 170, 226, 1)");
+  somaMaterial.addColorStop(1, "rgba(105, 75, 137, 1)");
   fill(astroColor);
+  drawingContext.fillStyle = somaMaterial;
   ellipse(0, 0, astrocyte.radius * 2);
   if (shouldGlow) {
     noFill();
@@ -6400,13 +6583,20 @@ function drawCorticalNeuronActivationEffect(snapshot) {
 
 function drawCorticalNeuronPath(points, startWeight, endWeight, strokeColor) {
   noFill();
-  stroke(strokeColor);
   strokeCap(ROUND);
   strokeJoin(ROUND);
   for (let i = 1; i < points.length; i++) {
     const t = (i - 1) / max(1, points.length - 2);
-    strokeWeight(lerp(startWeight, endWeight, t));
+    const weight = lerp(startWeight, endWeight, t);
+    stroke(42, 31, 22, 135);
+    strokeWeight(weight + max(0.35, weight * 0.2));
+    line(points[i - 1].x + 0.55, points[i - 1].y + 0.72, points[i].x + 0.55, points[i].y + 0.72);
+    stroke(strokeColor);
+    strokeWeight(weight);
     line(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
+    stroke(255, 249, 218, 110);
+    strokeWeight(max(0.28, weight * 0.18));
+    line(points[i - 1].x - 0.3, points[i - 1].y - 0.38, points[i].x - 0.3, points[i].y - 0.38);
   }
 }
 
@@ -6424,12 +6614,18 @@ function drawCorticalNeuronGlow(points, startWeight, endWeight, glowColor) {
 
 function drawCorticalUniformPath(points, strokeWeightValue, strokeColor) {
   noFill();
-  stroke(strokeColor);
   strokeCap(ROUND);
   strokeJoin(ROUND);
-  strokeWeight(strokeWeightValue);
   for (let i = 1; i < points.length; i++) {
+    stroke(38, 30, 24, 125);
+    strokeWeight(strokeWeightValue + max(0.3, strokeWeightValue * 0.2));
+    line(points[i - 1].x + 0.48, points[i - 1].y + 0.65, points[i].x + 0.48, points[i].y + 0.65);
+    stroke(strokeColor);
+    strokeWeight(strokeWeightValue);
     line(points[i - 1].x, points[i - 1].y, points[i].x, points[i].y);
+    stroke(255, 248, 218, 92);
+    strokeWeight(max(0.26, strokeWeightValue * 0.16));
+    line(points[i - 1].x - 0.26, points[i - 1].y - 0.34, points[i].x - 0.26, points[i].y - 0.34);
   }
 }
 
@@ -8475,11 +8671,30 @@ function drawCorticalEndothelialCells(cells) {
 
   push();
   noFill();
-  stroke(endothelialColor);
   strokeCap(ROUND);
+
+  stroke(38, 58, 54, 150);
+  cells.forEach((cell) => {
+    strokeWeight(cell.strokeWeight + 0.72);
+    line(cell.x1 + 0.42, cell.y1 + 0.55, cell.x2 + 0.42, cell.y2 + 0.55);
+  });
+
+  stroke(endothelialColor);
   cells.forEach((cell) => {
     strokeWeight(cell.strokeWeight);
     line(cell.x1, cell.y1, cell.x2, cell.y2);
+  });
+
+  stroke(236, 255, 247, 150);
+  cells.forEach((cell) => {
+    const highlightOffset = 0.24 * (cell.side || 1);
+    strokeWeight(max(0.34, cell.strokeWeight * 0.32));
+    line(
+      cell.x1 - (cell.nx || 0) * highlightOffset,
+      cell.y1 - (cell.ny || 0) * highlightOffset,
+      cell.x2 - (cell.nx || 0) * highlightOffset,
+      cell.y2 - (cell.ny || 0) * highlightOffset
+    );
   });
 
   pop();
@@ -8493,14 +8708,17 @@ function drawCorticalPericytes(pericytes) {
     : color(214, 152, 106, 210);
 
   push();
-  noStroke();
-  fill(pericyteColor);
-
   pericytes.forEach((pericyte) => {
     push();
     translate(pericyte.x, pericyte.y);
     rotate(pericyte.angle);
+    noStroke();
+    fill(55, 34, 29, 135);
+    ellipse(0.45, 0.58, pericyte.w + 0.7, pericyte.h + 0.45);
+    fill(pericyteColor);
     ellipse(0, 0, pericyte.w, pericyte.h);
+    fill(255, 226, 194, 125);
+    ellipse(-pericyte.w * 0.16, -pericyte.h * 0.18, pericyte.w * 0.46, pericyte.h * 0.32);
     pop();
   });
 
@@ -8519,6 +8737,8 @@ function drawCorticalPericyteEndfeet(endfeet) {
     translate(endfoot.x, endfoot.y);
     rotate(endfoot.angle);
     noStroke();
+    fill(58, 38, 74, 105);
+    ellipse(0.5, 0.65, endfoot.w + 0.8, endfoot.h + 0.5);
     fill(endfootColor);
     ellipse(0, 0, endfoot.w, endfoot.h);
     fill(endfootInnerColor);
@@ -10075,6 +10295,7 @@ window.getCorticalViewState = getCorticalViewState;
 window.getCorticalViewReadiness = getCorticalViewReadiness;
 window.updateCorticalView = updateCorticalView;
 window.warmCorticalViewInBackground = warmCorticalViewInBackground;
+window.prepareCorticalAgingView = prepareCorticalAgingView;
 window.zoomCorticalCanvasAtScreenPoint = zoomCorticalCanvasAtScreenPoint;
 window.corticalScreenToWorld = corticalScreenToWorld;
 window.corticalWorldToScreen = corticalWorldToScreen;
